@@ -1,0 +1,7 @@
+site_name: commsvizl
+site_description: A tiny pandas visualization library.
+docs_dir: docs
+theme:
+  name: readthedocs
+nav:
+  - Home: index.md
