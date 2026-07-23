@@ -14,6 +14,7 @@ site/
 data/**
 !data/**/
 !data/**/.gitkeep
+!data/raw/sample_sales.csv  # shipped example dataset for trying the library
 models/*
 !models/.gitkeep
 reports/figures/*
