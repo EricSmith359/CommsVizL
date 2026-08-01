@@ -13,6 +13,22 @@ summarize.df(df)
 summarize.kpi(df, "dau")
 ```
 
+## Dashboard — charts by name
+
+Point `Dashboard` at the folder with the sample CSVs and call a chart by name;
+each method shows the styled chart and returns its `Axes`.
+
+```python
+from commsvizl import Dashboard
+
+gaas = Dashboard("data/raw")
+gaas.kpi_row()
+gaas.dau_chart()
+gaas.revenue_by_segment()
+gaas.revenue_by_region()
+gaas.retention_heatmap()
+```
+
 ## `plot`
 
 - `plot.line(df)` — line chart of numeric columns

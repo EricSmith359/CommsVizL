@@ -36,6 +36,41 @@ Or run the ready-made demo, which writes every chart to `reports/figures/`:
 python notebooks/quickstart.py
 ```
 
+## Dashboard — charts by name
+
+The quickest way to see a chart: point `Dashboard` at the folder holding the
+sample CSVs and call the chart you want. No script or notebook cells needed —
+run the lines in a plain `.py` file (or a Python shell) and each chart opens in
+a window, styled with the dark theme and its fonts. Every method also returns
+its matplotlib `Axes`.
+
+```python
+from commsvizl import Dashboard
+
+gaas = Dashboard("data/raw")   # folder that holds the sample CSVs
+
+gaas.kpi_row()             # four KPI tiles (DAU, D7 retention, ARPU, MTD revenue)
+gaas.dau_chart()           # daily active users trend
+gaas.revenue_by_segment()  # weekly revenue stacked by segment
+gaas.revenue_by_region()   # weekly revenue stacked by region
+gaas.retention_heatmap()   # retention cohort grid
+```
+
+| Method | Chart |
+| --- | --- |
+| `gaas.kpi_row()` | four KPI cards with week-over-week change |
+| `gaas.dau_chart()` | DAU trend (area + line) |
+| `gaas.revenue_by_segment()` | stacked weekly revenue by segment |
+| `gaas.revenue_by_region()` | stacked weekly revenue by region |
+| `gaas.retention_heatmap()` | retention-by-cohort heatmap |
+
+To use your own data, point `Dashboard` at a folder containing the same CSV
+filenames (`dau_daily.csv`, `revenue_weekly.csv`, `revenue_by_region.csv`,
+`retention_cohorts.csv`, `weekly_kpis.csv`).
+
+For ad-hoc charting of any DataFrame, the lower-level `plot` / `summarize`
+functions below still work directly.
+
 ## Charts
 
 Import the two namespaces once — the dark theme is applied automatically:
@@ -176,8 +211,12 @@ theme.apply()          # re-apply if another library changed matplotlib's settin
 theme.PALETTE          # the categorical color cycle
 ```
 
-Fonts prefer `Inter` / `Helvetica Neue` and fall back to matplotlib's built-in
-`DejaVu Sans`, so charts render cleanly even if those fonts aren't installed.
+The **Inter** typeface ships with the package (SIL Open Font License — see
+`src/commsvizl/fonts/Inter-OFL.txt`) and is registered automatically on import,
+so charts render in the same font on every machine — no system install needed.
+If Inter is ever unavailable, the theme falls back to `Helvetica Neue` / `Arial`
+/ matplotlib's built-in `DejaVu Sans`, requesting only fonts that are actually
+present (so there are no `findfont` warnings).
 
 ## Sample data
 

@@ -19,6 +19,7 @@ from commsvizl import theme
 theme.apply()
 
 from commsvizl import plot, summarize
+from commsvizl.dashboard import Dashboard
 
-__all__ = ["plot", "summarize", "theme"]
-__version__ = "0.2.0"
+__all__ = ["plot", "summarize", "theme", "Dashboard"]
+__version__ = "0.3.0"

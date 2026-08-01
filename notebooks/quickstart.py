@@ -56,7 +56,7 @@ segments = {"battle_pass": "Battle pass", "cosmetics": "Cosmetics",
 rev = revenue.rename(columns=segments)
 rev.index = rev.index.str.replace("Wk", "", regex=False)  # "Wk1" -> "1"
 ax = plot.bar(rev, stacked=True, rot=0)                    # horizontal tick labels
-ax.legend(prop={"weight": "semibold"}, labelcolor=theme.MUTED)  # cleaner labels
+ax.legend(prop={"weight": "bold"}, labelcolor=theme.MUTED)  # cleaner labels
 ax.set_xlabel("Week")
 ax.set_title("Weekly revenue by segment")
 save(ax, "revenue_by_segment")
@@ -65,7 +65,7 @@ save(ax, "revenue_by_segment")
 region = pd.read_csv("data/raw/revenue_by_region.csv", index_col="week")
 region.index = region.index.str.replace("Wk", "", regex=False)
 ax = plot.stacked(region, rot=0)
-ax.legend(prop={"weight": "semibold"}, labelcolor=theme.MUTED)
+ax.legend(prop={"weight": "bold"}, labelcolor=theme.MUTED)
 ax.set_xlabel("Week")
 ax.set_title("Weekly revenue by region")
 save(ax, "revenue_by_region")
