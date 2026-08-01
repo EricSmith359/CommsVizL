@@ -36,30 +36,118 @@ Or run the ready-made demo, which writes every chart to `reports/figures/`:
 python notebooks/quickstart.py
 ```
 
-## API
+## Charts
 
-### `plot` — chart the numeric columns
+Import the two namespaces once — the dark theme is applied automatically:
 
-| Call | What it draws |
-| --- | --- |
-| `plot.line(df)` | line chart |
-| `plot.bar(df)` | bar chart |
-| `plot.stacked(df)` | stacked bar chart (one bar per row) |
-| `plot.area(df)` | stacked area chart |
-| `plot.hist(df, bins=20)` | overlaid histogram |
-| `plot.box(df)` | box-and-whisker plot |
-| `plot.scatter(df, x, y)` | scatter of `x` vs `y` |
-| `plot.heatmap(df, fmt="{:.0f}")` | magnitude heatmap of a matrix, annotated per cell |
+```python
+from commsvizl import plot, summarize
+```
+
+Every function below takes a pandas `DataFrame` as its first argument and
+returns a matplotlib `Axes`. The examples assume the sample data in
+`data/raw/` (see [Sample data](#sample-data)).
+
+### `plot` — chart your columns
+
+Unless noted, these operate on **every numeric column** of the frame and plot
+it against the DataFrame's index; series colors cycle blue → orange → green.
+
+#### `plot.line(df)`
+```python
+plot.line(dau)
+```
+One line per numeric column across the index. A trend/time-series view — the
+DAU-over-time shape.
+
+#### `plot.bar(df)`
+```python
+plot.bar(revenue)
+```
+Grouped vertical bars: one cluster per row, with each numeric column drawn as
+a separate bar side by side within the cluster.
+
+#### `plot.stacked(df)`
+```python
+plot.stacked(revenue, rot=0)
+```
+Vertical bars, one per row, with each numeric column **stacked** on top of the
+last so the segments sum to the bar's total. This is the weekly-revenue-by-
+segment / by-region look.
+
+#### `plot.area(df)`
+```python
+plot.area(dau, alpha=0.22)
+```
+A filled line chart — numeric columns are stacked as translucent bands from
+the x-axis up. With a single column it's one filled trend (the DAU panel draws
+`area` then overlays `line` for a crisp edge).
+
+#### `plot.hist(df, bins=20)`
+```python
+plot.hist(dau)
+```
+Overlaid, semi-transparent histograms (one per numeric column) showing how
+values are distributed across `bins` buckets.
+
+#### `plot.box(df)`
+```python
+plot.box(revenue)
+```
+One box-and-whisker per numeric column: median line, interquartile box,
+whiskers, and outlier points — a quick spread/outlier comparison.
+
+#### `plot.scatter(df, x, y)`
+```python
+plot.scatter(df, x="dau", y="revenue")
+```
+A point for each row positioned by two named columns (`x`, `y`), drawn in the
+theme blue. For relationships between two variables.
+
+#### `plot.heatmap(df, fmt="{:.0f}")`
+```python
+plot.heatmap(retention, fmt="{:.0f}%")
+```
+Renders the numeric matrix as a grid of cells colored light (low) → dark blue
+(high), with each value printed inside its cell (`fmt` controls formatting).
+Empty/`NaN` cells blend into the background — the retention cohort grid.
 
 ### `summarize` — chart the shape of the frame
 
-| Call | What it draws |
-| --- | --- |
-| `summarize.df(df)` | bar chart of `describe()` stats |
-| `summarize.missing(df)` | missing-value count per column |
-| `summarize.counts(df, column)` | value counts for one column |
-| `summarize.dtypes(df)` | pie chart of column dtypes |
-| `summarize.kpi(df, column)` | dark KPI card: latest value + % change vs previous |
+#### `summarize.df(df)`
+```python
+summarize.df(df)
+```
+Runs `describe()` and bar-charts the resulting stats (count, mean, std, min,
+quartiles, max) for each numeric column.
+
+#### `summarize.missing(df)`
+```python
+summarize.missing(retention)
+```
+One bar per column showing how many values are missing (`NaN`).
+
+#### `summarize.counts(df, column)`
+```python
+summarize.counts(df, "platform")
+```
+Bar chart of `value_counts()` for a single column — how often each distinct
+value appears.
+
+#### `summarize.dtypes(df)`
+```python
+summarize.dtypes(df)
+```
+Pie chart of how many columns share each dtype (int, float, object, ...).
+
+#### `summarize.kpi(df, column, label=None, since="prev", ax=None)`
+```python
+summarize.kpi(kpis, "dau", label="Daily active users", since="last week")
+```
+A single dark stat card: the big, bold **latest** value of `column`, a muted
+`label` above it, and the **% change vs the previous row** below — green when
+up, red when down. `since` sets the comparison wording; pass an `ax` to place
+several cards on one figure as a KPI row.
 
 Any extra keyword arguments pass straight through to pandas' `.plot()`, so
 `plot.line(df, title="Trend", figsize=(8, 4))` works as expected.
