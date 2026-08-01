@@ -51,6 +51,7 @@ class Dashboard:
         rev = self._read(name, "week").rename(columns=rename)
         rev.index = rev.index.str.replace("Wk", "", regex=False)
         ax = plot.stacked(rev, rot=0)
+        ax.grid(False)
         ax.legend(prop={"weight": "bold"}, labelcolor=theme.MUTED)
         ax.set_xlabel("Week")
         ax.set_title(f"Weekly revenue {subtitle}")
