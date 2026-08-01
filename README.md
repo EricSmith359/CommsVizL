@@ -44,6 +44,7 @@ python notebooks/quickstart.py
 | --- | --- |
 | `plot.line(df)` | line chart |
 | `plot.bar(df)` | bar chart |
+| `plot.stacked(df)` | stacked bar chart (one bar per row) |
 | `plot.area(df)` | stacked area chart |
 | `plot.hist(df, bins=20)` | overlaid histogram |
 | `plot.box(df)` | box-and-whisker plot |
@@ -99,6 +100,8 @@ panel:
   live-event spikes).
 - **`revenue_weekly.csv`** — weekly revenue split by monetization segment
   (battle pass / cosmetics / currency packs).
+- **`revenue_by_region.csv`** — the same weekly revenue split by region
+  (NA / SA / Europe / Asia).
 - **`retention_cohorts.csv`** — retention by weekly cohort (D1–D30); recent
   cohorts have empty cells for days that haven't elapsed yet.
 

@@ -19,6 +19,7 @@ data/**
 !data/raw/revenue_weekly.csv
 !data/raw/retention_cohorts.csv
 !data/raw/weekly_kpis.csv
+!data/raw/revenue_by_region.csv
 models/*
 !models/.gitkeep
 reports/figures/*

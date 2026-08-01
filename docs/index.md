@@ -17,6 +17,7 @@ summarize.kpi(df, "dau")
 
 - `plot.line(df)` — line chart of numeric columns
 - `plot.bar(df)` — bar chart of numeric columns
+- `plot.stacked(df)` — stacked bar chart (one bar per row)
 - `plot.area(df)` — stacked area chart
 - `plot.hist(df, bins=20)` — overlaid histogram
 - `plot.box(df)` — box-and-whisker plot

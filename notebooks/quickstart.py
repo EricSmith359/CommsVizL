@@ -61,6 +61,15 @@ ax.set_xlabel("Week")
 ax.set_title("Weekly revenue by segment")
 save(ax, "revenue_by_segment")
 
+# --- weekly revenue by region (stacked bar) -------------------------------
+region = pd.read_csv("data/raw/revenue_by_region.csv", index_col="week")
+region.index = region.index.str.replace("Wk", "", regex=False)
+ax = plot.stacked(region, rot=0)
+ax.legend(prop={"weight": "semibold"}, labelcolor=theme.MUTED)
+ax.set_xlabel("Week")
+ax.set_title("Weekly revenue by region")
+save(ax, "revenue_by_region")
+
 # --- retention cohort heatmap (empty recent cells left blank) -------------
 ax = plot.heatmap(retention, fmt="{:.0f}%")
 ax.set_title("Retention by cohort")

@@ -32,6 +32,12 @@ def bar(df, **kw):
 
 
 @frames_only
+def stacked(df, **kw):
+    """Stacked bar chart of every numeric column (one bar per row)."""
+    return df.select_dtypes("number").plot(kind="bar", stacked=True, **kw)
+
+
+@frames_only
 def area(df, **kw):
     """Stacked area chart of every numeric column."""
     return df.select_dtypes("number").plot(kind="area", **kw)
