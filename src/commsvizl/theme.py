@@ -1,0 +1,57 @@
+"""Dark, flat theme matching the GaaS ops-dashboard aesthetic.
+
+Applied automatically on ``import commsvizl``. Call :func:`apply` to
+re-apply it (e.g. after another library changes matplotlib's settings).
+"""
+
+import matplotlib as mpl
+from cycler import cycler
+
+# categorical palette — blue / orange / green, then extras for >3 series
+PALETTE = ["#2E6FE8", "#E8632E", "#1FA971", "#7E57F0", "#E8B72E", "#17B0C4"]
+BLUE, ORANGE, GREEN = PALETTE[0], PALETTE[1], PALETTE[2]
+
+# surfaces & ink (flat: plot area matches the page)
+PAGE = "#20242B"      # figure / axes background (soft charcoal)
+CARD = "#2A2F37"      # KPI card panel, a touch lighter than the page
+GRID = "#363C44"      # subtle horizontal gridlines
+INK = "#F2F4F7"       # primary text
+MUTED = "#9AA1AA"     # labels, ticks, legend
+
+# semantic deltas
+POSITIVE = "#34B364"
+NEGATIVE = "#E4564C"
+
+_RC = {
+    "figure.facecolor": PAGE,
+    "savefig.facecolor": PAGE,
+    "axes.facecolor": PAGE,
+    "axes.edgecolor": GRID,
+    "axes.labelcolor": MUTED,
+    "axes.titlecolor": INK,
+    "axes.titleweight": "bold",
+    "axes.titlesize": 14,
+    "axes.titlelocation": "left",
+    "axes.grid": True,
+    "axes.grid.axis": "y",
+    "axes.axisbelow": True,
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "grid.color": GRID,
+    "grid.linewidth": 0.8,
+    "xtick.color": MUTED,
+    "ytick.color": MUTED,
+    "text.color": INK,
+    "legend.frameon": False,
+    "legend.labelcolor": MUTED,
+    "font.family": ["Inter", "Helvetica Neue", "Arial", "DejaVu Sans"],
+    "figure.figsize": (8.0, 4.5),
+}
+
+
+def apply():
+    """Apply the commsvizl dark theme to matplotlib globally."""
+    mpl.rcParams["axes.prop_cycle"] = cycler(color=PALETTE)
+    for key, value in _RC.items():
+        if key in mpl.rcParams:
+            mpl.rcParams[key] = value

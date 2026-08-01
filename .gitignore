@@ -14,8 +14,11 @@ site/
 data/**
 !data/**/
 !data/**/.gitkeep
-# shipped example dataset for trying the library
-!data/raw/sample_sales.csv
+# shipped example datasets for trying the library
+!data/raw/dau_daily.csv
+!data/raw/revenue_weekly.csv
+!data/raw/retention_cohorts.csv
+!data/raw/weekly_kpis.csv
 models/*
 !models/.gitkeep
 reports/figures/*

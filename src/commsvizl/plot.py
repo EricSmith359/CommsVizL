@@ -1,11 +1,22 @@
-"""Quick charts of a DataFrame's numeric columns.
+"""Quick charts of a DataFrame's numeric columns, in the commsvizl theme.
 
     >>> from commsvizl import plot
     >>> plot.line(df)
-    >>> plot.scatter(df, x="height", y="weight")
+    >>> plot.scatter(df, x="dau", y="revenue_usd")
+    >>> plot.heatmap(cohort_matrix)
 """
 
+import matplotlib.pyplot as plt
+from matplotlib.colors import LinearSegmentedColormap
+
+from commsvizl import theme
 from commsvizl._guard import frames_only
+
+# sequential blue ramp: low values light, high values dark (cohort-grid look)
+_CMAP = LinearSegmentedColormap.from_list(
+    "commsvizl_seq", ["#EAF1FC", theme.BLUE, "#0F2A5A"]
+)
+_CMAP.set_bad(theme.PAGE)  # empty cells blend into the page
 
 
 @frames_only
@@ -41,4 +52,23 @@ def box(df, **kw):
 @frames_only
 def scatter(df, x, y, **kw):
     """Scatter plot of column ``x`` against column ``y``."""
-    return df.plot(kind="scatter", x=x, y=y, **kw)
+    return df.plot(kind="scatter", x=x, y=y, color=theme.BLUE, **kw)
+
+
+@frames_only
+def heatmap(df, fmt="{:.0f}", **kw):
+    """Magnitude heatmap of the numeric columns, annotated per cell."""
+    num = df.select_dtypes("number")
+    lo, hi = num.min().min(), num.max().max()
+    ax = plt.gca()
+    ax.grid(False)
+    ax.imshow(num.values, aspect="auto", cmap=_CMAP, **kw)
+    ax.set_xticks(range(len(num.columns)), list(num.columns))
+    ax.set_yticks(range(len(num.index)), list(num.index))
+    for i, row in enumerate(num.values):
+        for j, v in enumerate(row):
+            if v == v:  # skip NaN
+                strong = hi > lo and (v - lo) / (hi - lo) > 0.5
+                ax.text(j, i, fmt.format(v), ha="center", va="center",
+                        color="white" if strong else "#0F2A5A", fontsize=9)
+    return ax

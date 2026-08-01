@@ -4,14 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "commsvizl"
-version = "0.1.0"
-description = "A tiny pandas visualization library."
+version = "0.2.0"
+description = "A tiny pandas visualization library with a dark, flat dashboard theme."
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.9"
 authors = [{ name = "Eric Smith", email = "esmith14@dons.usfca.edu" }]
 keywords = ["pandas", "visualization", "plotting", "dataframe"]
-dependencies = ["pandas"]
+dependencies = ["pandas", "matplotlib"]
 
 [project.urls]
 Homepage = "https://github.com/ericsmith359/commsvizl"
